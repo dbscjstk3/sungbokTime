@@ -1,0 +1,15 @@
+.env
+logs/
+*.log
+
+/build/
+*.o
+*.class
+
+*.tmp
+
+*.jar
+*.war
+*.ear
+
+.gradle/

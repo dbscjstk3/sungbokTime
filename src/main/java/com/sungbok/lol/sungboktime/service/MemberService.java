@@ -46,7 +46,7 @@ public class MemberService {
         }
 
         Member member = Member.builder()
-                .name(account.gameName())
+                .name(request.name())
                 .riotId(account.gameName() + "#" + account.tagLine())
                 .riotPuuid(puuid)
                 .tier(tier == null ? "UNRANKED" : tier)
