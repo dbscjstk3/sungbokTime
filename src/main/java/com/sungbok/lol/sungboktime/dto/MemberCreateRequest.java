@@ -8,7 +8,6 @@ public record MemberCreateRequest(
         @NotBlank
         String gameName,
         @NotBlank
-        String tagLine,
-        String position
+        String tagLine
 ) {
 }

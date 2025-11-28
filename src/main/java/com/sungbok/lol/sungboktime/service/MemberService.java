@@ -50,7 +50,6 @@ public class MemberService {
                 .riotId(account.gameName() + "#" + account.tagLine())
                 .riotPuuid(puuid)
                 .tier(tier == null ? "UNRANKED" : tier)
-                .position(request.position())
                 .build();
 
         Member saved = memberRepository.save(member);

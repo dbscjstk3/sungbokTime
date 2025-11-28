@@ -30,9 +30,6 @@ public class Member {
     @Column(nullable = false)
     private String tier;
 
-    @Column
-    private String position;
-
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

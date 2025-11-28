@@ -1,0 +1,489 @@
+.team-balance-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.75rem min(5vw, 80px) 3.5rem;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.team-balance-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.team-balance-page__header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #1d4ed8 0%, #0ea5e9 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.team-balance-page__header p {
+  margin: 0.4rem 0 0;
+  color: rgba(71, 85, 105, 0.82);
+  font-size: 0.98rem;
+}
+
+.team-balance-page__content {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: flex-start;
+}
+
+.team-balance-page__content--with-result {
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 0.6fr);
+  gap: 3rem;
+}
+
+.team-balance-page__card--form {
+  height: 100%;
+  width: 500px;
+}
+
+.team-balance-page__selected {
+  background: rgba(224, 242, 254, 0.9);
+  border: 1px solid rgba(125, 211, 252, 0.6);
+  padding: 0.9rem 1.2rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 150px;
+  align-items: flex-start;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px -24px rgba(59, 130, 246, 0.35);
+}
+
+.team-balance-page__selected span {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: rgba(30, 64, 175, 0.75);
+  text-transform: uppercase;
+}
+
+.team-balance-page__selected strong {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  line-height: 1;
+}
+
+.team-balance-page__selected strong span {
+  font-size: 0.95rem;
+  color: rgba(30, 64, 175, 0.55);
+  margin-left: 0.15rem;
+}
+
+.team-balance-page__selected--inline {
+  background: rgba(224, 242, 254, 0.5);
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  padding: 0.6rem 0.9rem;
+  border-radius: 20px;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: none;
+}
+
+.team-balance-page__selected--inline strong {
+  font-size: 1.3rem;
+  color: #1d4ed8;
+}
+
+.team-balance-page__selected--inline strong span {
+  font-size: 0.85rem;
+  color: rgba(30, 64, 175, 0.6);
+}
+
+.team-balance-page__error {
+  background: rgba(254, 226, 226, 0.95);
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  color: #b91c1c;
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.95rem;
+  box-shadow: 0 12px 25px rgba(248, 113, 113, 0.2);
+}
+
+.team-balance-page__card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 18px;
+  padding: 2rem 2.2rem;
+  box-shadow: 0 22px 50px -28px rgba(148, 163, 184, 0.55);
+  backdrop-filter: blur(10px);
+}
+
+.team-balance-page__card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+
+.team-balance-page__card-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.team-balance-page__card-head h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.team-balance-page__card-head p {
+  margin: 0;
+  color: rgba(71, 85, 105, 0.9);
+  font-size: 0.95rem;
+}
+
+.team-balance-page__status {
+  margin: 0;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: rgba(226, 232, 240, 0.45);
+  color: rgba(51, 65, 85, 0.85);
+  font-size: 0.95rem;
+}
+
+.team-balance-page__table-wrapper {
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  overflow: hidden;
+  box-shadow: 0 24px 55px -28px rgba(148, 163, 184, 0.45);
+  max-height: 520px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.6) transparent;
+}
+
+.team-balance-page__table-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.team-balance-page__table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.team-balance-page__table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 999px;
+}
+
+.team-balance-page__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.team-balance-page__table th {
+  text-align: left;
+  padding: 0.95rem 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  background: linear-gradient(
+    120deg,
+    rgba(239, 246, 255, 0.95),
+    rgba(219, 234, 254, 0.8)
+  );
+  border-bottom: 1px solid rgba(191, 219, 254, 0.6);
+  letter-spacing: 0.01em;
+}
+
+.team-balance-page__table td {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  color: #1f2937;
+  background: rgba(255, 255, 255, 0.96);
+  transition: background 0.2s ease;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.team-balance-page__table tbody tr:nth-child(even) td {
+  background: rgba(241, 245, 249, 0.9);
+}
+
+.team-balance-page__table tbody tr:hover td {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.team-balance-page__table input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: #6366f1;
+}
+
+.team-balance-page__cta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.4rem;
+}
+
+.team-balance-page__cta button {
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 16px 40px -18px rgba(99, 102, 241, 0.8);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.team-balance-page__cta button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px -15px rgba(56, 189, 248, 0.55);
+}
+
+.team-balance-page__cta button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 12px 25px -10px rgba(124, 58, 237, 0.65);
+}
+
+.team-balance-page__cta button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.team-balance-page__card--result {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(191, 219, 254, 0.6);
+  color: #0f172a;
+  min-height: 100%;
+}
+
+.team-balance-page__card--result .team-balance-page__card-head h2 {
+  color: #0f172a;
+}
+
+.team-balance-page__card--result .team-balance-page__card-head p {
+  color: rgba(71, 85, 105, 0.85);
+}
+
+.team-balance-page__result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.team-balance-page__result {
+  border-radius: 18px;
+  padding: 1.4rem 1.6rem;
+  background: rgba(243, 248, 255, 0.9);
+  border: 1px solid rgba(191, 219, 254, 0.8);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.team-balance-page__result--blue {
+  background: linear-gradient(
+    145deg,
+    rgba(219, 234, 254, 0.95),
+    rgba(191, 219, 254, 0.85)
+  );
+}
+
+.team-balance-page__result--red {
+  background: linear-gradient(
+    145deg,
+    rgba(254, 226, 226, 0.95),
+    rgba(254, 205, 211, 0.9)
+  );
+}
+
+.team-balance-page__result-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
+
+.team-balance-page__result-header span {
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.team-balance-page__result-header strong {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.team-balance-page__result ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.team-balance-page__result-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 14px;
+  background: rgba(241, 245, 249, 0.8);
+  min-height: 220px;
+  padding: 1.5rem 1.25rem;
+  color: rgba(71, 85, 105, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.team-balance-page__result-empty strong {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.team-balance-page__result li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(191, 219, 254, 0.6);
+}
+
+.team-balance-page__player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.team-balance-page__player-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.team-balance-page__player-id {
+  font-size: 0.85rem;
+  color: rgba(71, 85, 105, 0.8);
+}
+
+.team-balance-page__player-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: rgba(71, 85, 105, 0.9);
+}
+
+.team-balance-page__player-score {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+@media (max-width: 960px) {
+  .team-balance-page__content--with-result {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .team-balance-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .team-balance-page__table-wrapper {
+    max-height: none;
+  }
+
+  .team-balance-page__selected {
+    align-self: stretch;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .team-balance-page__result-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-balance-page {
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .team-balance-page__card {
+    padding: 1.7rem 1.4rem;
+  }
+
+  .team-balance-page__card-head-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .team-balance-page__table {
+    font-size: 0.88rem;
+  }
+
+  .team-balance-page__table thead {
+    display: none;
+  }
+
+  .team-balance-page__table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .team-balance-page__table td {
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  .team-balance-page__table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(71, 85, 105, 0.9);
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .team-balance-page__table input[type="checkbox"] {
+    transform: scale(1.1);
+  }
+
+  .team-balance-page__result li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .team-balance-page__player-meta {
+    align-items: flex-start;
+  }
+}

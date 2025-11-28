@@ -6,10 +6,9 @@ public record MemberResponse(
         Long id,
         String name,
         String riotId,
-        String tier,
-        String position
+        String tier
 ) {
     public static MemberResponse from(Member m) {
-        return new MemberResponse(m.getId(), m.getName(), m.getRiotId(), m.getTier(), m.getPosition());
+        return new MemberResponse(m.getId(), m.getName(), m.getRiotId(), m.getTier());
     }
 }

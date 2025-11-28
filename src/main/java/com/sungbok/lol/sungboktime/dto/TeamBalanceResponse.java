@@ -16,11 +16,10 @@ public record TeamBalanceResponse(
             String name,
             String riotId,
             String tier,
-            String position,
             int score
     ) {
         public static TeamMemberDto from(Member m, int score) {
-            return new TeamMemberDto(m.getId(), m.getName(), m.getRiotId(), m.getTier(), m.getPosition(), score);
+            return new TeamMemberDto(m.getId(), m.getName(), m.getRiotId(), m.getTier(), score);
         }
     }
 }

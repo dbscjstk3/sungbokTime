@@ -1,25 +1,27 @@
-import api from "./client"
+import api from "./client";
 
 export type TeamBalanceMember = {
-    id: number;
-    name: string;
-    riotId: string;
-    tier: string | null;
-    position: string | null;
+  memberId: number;
+  name: string;
+  riotId: string;
+  tier: string | null;
+  score: number;
 };
 
 export type TeamBalanceResponse = {
-    blueTeam: TeamBalanceMember[];
-    redTeam: TeamBalanceMember[];
+  blueTeam: TeamBalanceMember[];
+  blueTeamScore: number;
+  redTeam: TeamBalanceMember[];
+  redTeamScore: number;
 };
 
 export type TeamBalanceRequest = {
-    memberIds: number[];
+  memberIds: number[];
 };
 
 export async function requestTeamBalance(
-    payload: TeamBalanceRequest
+  payload: TeamBalanceRequest
 ): Promise<TeamBalanceResponse> {
-    const res = await api.post<TeamBalanceResponse>("/api/team-balance", payload);
-    return res.data;
+  const res = await api.post<TeamBalanceResponse>("/api/team-balance", payload);
+  return res.data;
 }

@@ -1,39 +1,63 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as React from "react";
+import "./Layout.css";
+import kingLogo from "../assets/KING.JPG";
+
+const NAV_ITEMS = [
+  { to: "/members", label: "멤버", base: "members", end: true },
+  { to: "/team-balance", label: "팀 밸런스", base: "team", end: true },
+  {
+    to: "/matches/create",
+    label: "매치 등록",
+    base: "match-create",
+    end: true,
+  },
+  {
+    to: "/matches/pending",
+    label: "진행 중 매치",
+    base: "matches-pending",
+    end: true,
+  },
+  { to: "/matches", label: "매치 기록", base: "matches", end: true },
+];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return (
-        <div>
-            {/* 상단 네비게이션 */}
-            <nav
-                style={{
-                    background: "#1f2937",
-                    padding: "0.75rem 1rem",
-                    display: "flex",
-                    gap: "1rem",
-                }}
-            >
-                <Link to="/members" style={{ color: "white", textDecoration: "none" }}>
-                    멤버
-                </Link>
-                <Link
-                    to="/team-balance"
-                    style={{ color: "white", textDecoration: "none" }}
-                >
-                    팀 밸런스
-                </Link>
-                <Link
-                    to="/matches"
-                    style={{ color: "white", textDecoration: "none" }}
-                >
-                    매치 기록
-                </Link>
-            </nav>
+  const getClassName =
+    (base: string) =>
+    ({ isActive }: { isActive: boolean }) =>
+      `layout__link layout__link--${base}${
+        isActive ? ` layout__link--${base}--active` : ""
+      }`;
 
-            {/* 페이지 내용 */}
-            <main style={{ padding: "2rem", background: "#f9fafb", minHeight: "100vh" }}>
-                {children}
-            </main>
+  return (
+    <div className="layout">
+      <nav className="layout__nav">
+        <div className="layout__nav-inner">
+          <div className="layout__brand">
+            <img
+              src={kingLogo}
+              alt="SungbokTime 로고"
+              className="layout__brand-logo"
+            />
+            <span>SungbokTime</span>
+          </div>
+          <div className="layout__links">
+            {NAV_ITEMS.map(({ to, label, base, end }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={end}
+                className={getClassName(base)}
+              >
+                {label}
+              </NavLink>
+            ))}
+          </div>
         </div>
-    );
+      </nav>
+
+      {/* 페이지 내용 */}
+      <main className="layout__main">{children}</main>
+    </div>
+  );
 }

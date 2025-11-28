@@ -1,0 +1,293 @@
+.match-create-page {
+  width: 100%;
+  max-width: 1180px;
+  padding: 2.75rem min(5vw, 80px) 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: #0f172a;
+  margin: 0 auto;
+}
+
+.match-create-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.match-create-page__header h1 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #1d4ed8 0%, #0ea5e9 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.match-create-page__header p {
+  margin: 0.75rem 0 0;
+  color: rgba(71, 85, 105, 0.85);
+  font-size: 1rem;
+  max-width: 520px;
+}
+
+.match-create-page__form {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  padding: 2rem 2.2rem;
+  box-shadow: 0 24px 55px -28px rgba(148, 163, 184, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.match-create-page__error-text,
+.match-create-page__success-text {
+  margin: 0;
+  padding: 0.95rem 1.1rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
+}
+
+.match-create-page__error-text {
+  background: rgba(254, 226, 226, 0.9);
+  color: #b91c1c;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+}
+
+.match-create-page__success-text {
+  background: rgba(220, 252, 231, 0.85);
+  color: #166534;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+}
+
+.match-create-page__form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.match-create-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  color: rgba(71, 85, 105, 0.95);
+}
+
+.match-create-page__field span {
+  font-weight: 600;
+}
+
+.match-create-page__field input,
+.match-create-page__field textarea,
+.match-create-page__team-card select,
+.match-create-page__team-card input {
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  border-radius: 12px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.match-create-page__field input:focus,
+.match-create-page__field textarea:focus,
+.match-create-page__team-card select:focus,
+.match-create-page__team-card input:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.75);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.match-create-page__field textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.match-create-page__teams {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.match-create-page__team-card {
+  border-radius: 20px;
+  padding: 1.6rem 1.8rem;
+  border: 1px solid rgba(191, 219, 254, 0.6);
+  background: rgba(248, 250, 252, 0.95);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 24px 50px -28px rgba(148, 163, 184, 0.45);
+}
+
+.match-create-page__team-card--blue {
+  background: linear-gradient(
+    145deg,
+    rgba(219, 234, 254, 0.9),
+    rgba(191, 219, 254, 0.82)
+  );
+}
+
+.match-create-page__team-card--red {
+  background: linear-gradient(
+    145deg,
+    rgba(254, 226, 226, 0.9),
+    rgba(254, 205, 211, 0.8)
+  );
+}
+
+.match-create-page__team-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.match-create-page__team-head h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: rgba(15, 23, 42, 0.95);
+}
+
+.match-create-page__team-count {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(30, 64, 175, 0.9);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.match-create-page__team-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.match-create-page__player-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(191, 219, 254, 0.55);
+  border-radius: 16px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.match-create-page__player-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.match-create-page__player-slot-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.15);
+  color: rgba(30, 64, 175, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.match-create-page__player-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.match-create-page__team-card select,
+.match-create-page__team-card input {
+  min-width: 0;
+}
+
+.match-create-page__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.match-create-page__primary-button {
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.8rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  cursor: pointer;
+  box-shadow: 0 18px 36px -20px rgba(59, 130, 246, 0.65);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.match-create-page__primary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 42px -20px rgba(99, 102, 241, 0.65);
+}
+
+.match-create-page__primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.match-create-page__ghost-button {
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(71, 85, 105, 0.9);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.match-create-page__ghost-button:hover:not(:disabled) {
+  background: rgba(226, 232, 240, 0.65);
+  color: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.9);
+}
+
+.match-create-page__ghost-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 1024px) {
+  .match-create-page__teams {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .match-create-page {
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .match-create-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .match-create-page__form {
+    padding: 1.8rem 1.6rem;
+  }
+
+  .match-create-page__form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .match-create-page__player-inputs {
+    grid-template-columns: 1fr;
+  }
+}

@@ -27,7 +27,7 @@ public class Match {
     private String info;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "win_side", nullable = false)
+    @Column(name = "win_side", nullable = false, columnDefinition = "varchar(10) default 'PENDING'")
     private WinSide winSide;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,6 +61,6 @@ public class Match {
     }
 
     public enum WinSide {
-        BLUE, RED
+        BLUE, RED, PENDING
     }
 }

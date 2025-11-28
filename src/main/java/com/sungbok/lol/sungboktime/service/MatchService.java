@@ -6,7 +6,6 @@ import com.sungbok.lol.sungboktime.entity.Match.WinSide;
 import com.sungbok.lol.sungboktime.entity.MatchPlayer;
 import com.sungbok.lol.sungboktime.entity.MatchPlayer.TeamSide;
 import com.sungbok.lol.sungboktime.entity.Member;
-import com.sungbok.lol.sungboktime.repository.MatchPlayerRepository;
 import com.sungbok.lol.sungboktime.repository.MatchRepository;
 import com.sungbok.lol.sungboktime.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ import java.util.List;
 public class MatchService {
 
     private final MatchRepository matchRepository;
-    private final MatchPlayerRepository matchPlayerRepository;
     private final MemberRepository memberRepository;
 
     @Transactional
@@ -31,20 +29,28 @@ public class MatchService {
                 ? request.playedAt()
                 : LocalDateTime.now();
 
+        WinSide winSide = request.winSide() != null ? request.winSide() : WinSide.PENDING;
+
         Match match = Match.builder()
                 .playedAt(playedAt)
                 .info(request.info())
-                .winSide(null)
+                .winSide(winSide)
                 .build();
 
         for (MatchPlayerRequest playerRequest : request.players()) {
             Member member = memberRepository.findById(playerRequest.memberId())
                     .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
+            boolean isWin = false;
+            if (winSide != WinSide.PENDING) {
+                isWin = (winSide == WinSide.BLUE && playerRequest.teamSide() == TeamSide.BLUE)
+                        || (winSide == WinSide.RED && playerRequest.teamSide() == TeamSide.RED);
+            }
+
             MatchPlayer player = MatchPlayer.builder()
                     .member(member)
                     .teamSide(playerRequest.teamSide())
-                    .isWin(false)
+                    .isWin(isWin)
                     .position(playerRequest.position())
                     .championName(playerRequest.championName())
                     .build();
@@ -85,7 +91,7 @@ public class MatchService {
                 .orElseThrow(() -> new IllegalArgumentException("Match not found"));
 
         WinSide winSide = request.winSide();
-        if (winSide == null) {
+        if (winSide == null || winSide == WinSide.PENDING) {
             throw new IllegalArgumentException("Win side is required");
         }
 

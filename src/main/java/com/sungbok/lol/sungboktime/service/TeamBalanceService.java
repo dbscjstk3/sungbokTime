@@ -67,8 +67,9 @@ public class TeamBalanceService {
             case "SILVER" -> 300;
             case "GOLD" -> 400;
             case "PLATINUM" -> 500;
-            case "DIAMOND" -> 600;
-            case "MASTER" -> 700;
+            case "EMERALD" -> 600;
+            case "DIAMOND" -> 700;
+            case "MASTER" -> 800;
             default -> 50;
         };
     }

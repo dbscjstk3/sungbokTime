@@ -9,8 +9,6 @@ public record MatchPlayerRequest(
 
         @NotNull
         MatchPlayer.TeamSide teamSide,
-
-        Boolean isWin,
         String position,
         String championName
 ) {
