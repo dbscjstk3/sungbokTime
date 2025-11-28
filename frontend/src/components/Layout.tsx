@@ -19,6 +19,7 @@ const NAV_ITEMS = [
     end: true,
   },
   { to: "/matches", label: "매치 기록", base: "matches", end: true },
+  { to: "/roulette", label: "찌꺼기", base: "roulette", end: true },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -4,6 +4,7 @@ import TeamBalancePage from "../pages/TeamBalancePage";
 import MatchesPage from "../pages/MatchesPage";
 import MatchCreatePage from "../pages/MatchCreatePage";
 import PendingMatchesPage from "../pages/PendingMatchesPage";
+import RoulettePage from "../pages/RoulettePage";
 import Layout from "../components/Layout";
 
 export default function AppRouter() {
@@ -17,6 +18,7 @@ export default function AppRouter() {
           <Route path="/matches/create" element={<MatchCreatePage />} />
           <Route path="/matches/pending" element={<PendingMatchesPage />} />
           <Route path="/matches" element={<MatchesPage />} />
+          <Route path="/roulette" element={<RoulettePage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

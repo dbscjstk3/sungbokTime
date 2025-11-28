@@ -86,7 +86,8 @@
 .layout__link--team--active,
 .layout__link--match-create--active,
 .layout__link--matches-pending--active,
-.layout__link--matches--active {
+.layout__link--matches--active,
+.layout__link--roulette--active {
   color: #2563eb;
 }
 
@@ -94,7 +95,8 @@
 .layout__link--team--active::after,
 .layout__link--match-create--active::after,
 .layout__link--matches-pending--active::after,
-.layout__link--matches--active::after {
+.layout__link--matches--active::after,
+.layout__link--roulette--active::after {
   transform: scaleX(1);
   opacity: 1;
 }
