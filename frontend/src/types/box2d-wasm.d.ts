@@ -1,18 +1,8 @@
-declare module 'box2d-wasm' {
-  interface Box2DModule extends EmscriptenModule {
-    b2Vec2: typeof b2Vec2;
-    b2World: typeof b2World;
-    b2Body: typeof b2Body;
-    b2BodyDef: typeof b2BodyDef;
-    b2FixtureDef: typeof b2FixtureDef;
-    b2PolygonShape: typeof b2PolygonShape;
-    b2EdgeShape: typeof b2EdgeShape;
-    b2CircleShape: typeof b2CircleShape;
-    b2_staticBody: number;
-    b2_kinematicBody: number;
-    b2_dynamicBody: number;
-  }
+interface EmscriptenModule {
+  [key: string]: any;
+}
 
+declare namespace Box2D {
   interface b2Vec2 {
     x: number;
     y: number;
@@ -20,6 +10,7 @@ declare module 'box2d-wasm' {
 
   interface b2World {
     CreateBody(def: b2BodyDef): b2Body;
+    DestroyBody(body: b2Body): void;
     Step(timeStep: number, velocityIterations: number, positionIterations: number): void;
     ClearForces(): void;
   }
@@ -32,10 +23,14 @@ declare module 'box2d-wasm' {
     GetAngularVelocity(): number;
     SetLinearVelocity(velocity: b2Vec2): void;
     GetLinearVelocity(): b2Vec2;
+    SetAwake(flag: boolean): void;
+    SetEnabled(flag: boolean): void;
     CreateFixture(def: b2FixtureDef): b2Fixture;
     CreateFixture(shape: b2Shape, density: number): b2Fixture;
     ApplyForce(force: b2Vec2, point: b2Vec2): void;
     ApplyImpulse(impulse: b2Vec2, point: b2Vec2): void;
+    ApplyLinearImpulseToCenter(impulse: b2Vec2): void;
+    GetContactList(): any;
   }
 
   interface b2BodyDef {
@@ -67,19 +62,23 @@ declare module 'box2d-wasm' {
   interface b2Fixture {
     // Fixture interface
   }
+}
 
-  declare namespace Box2D {
-    type b2Vec2 = b2Vec2;
-    type b2World = b2World;
-    type b2Body = b2Body;
-    type b2BodyDef = b2BodyDef;
-    type b2FixtureDef = b2FixtureDef;
-    type b2PolygonShape = b2PolygonShape;
-    type b2EdgeShape = b2EdgeShape;
-    type b2CircleShape = b2CircleShape;
+declare module 'box2d-wasm' {
+  interface Box2DModule extends EmscriptenModule {
+    b2Vec2: new (x: number, y: number) => Box2D.b2Vec2;
+    b2World: new (gravity: Box2D.b2Vec2) => Box2D.b2World;
+    b2Body: any;
+    b2BodyDef: new () => Box2D.b2BodyDef;
+    b2FixtureDef: new () => Box2D.b2FixtureDef;
+    b2PolygonShape: new () => Box2D.b2PolygonShape;
+    b2EdgeShape: new () => Box2D.b2EdgeShape;
+    b2CircleShape: new () => Box2D.b2CircleShape;
+    b2_staticBody: number;
+    b2_kinematicBody: number;
+    b2_dynamicBody: number;
   }
 
   function Box2DFactory(): Promise<Box2DModule>;
   export default Box2DFactory;
 }
-
