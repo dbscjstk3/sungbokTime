@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/sungboktime?serverTimezone=Asia/Seoul
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/sungboktime?serverTimezone=Asia/Seoul}
     username: ${MYSQL_ID}
     password: ${MYSQL_PW}
   jpa:

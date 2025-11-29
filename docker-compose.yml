@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sungboktime-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-sungboktime}
+      MYSQL_USER: ${MYSQL_USER:-sungboktime}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-sungboktime}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sungboktime-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sungboktime-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-sungboktime}?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      MYSQL_ID: ${MYSQL_USER:-sungboktime}
+      MYSQL_PW: ${MYSQL_PASSWORD:-sungboktime}
+      RIOT_API_KEY: ${RIOT_API_KEY}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sungboktime-network
+
+volumes:
+  mysql_data:
+
+networks:
+  sungboktime-network:
+    driver: bridge
+
