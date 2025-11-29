@@ -29,7 +29,7 @@ declare namespace Box2D {
     CreateFixture(shape: b2Shape, density: number): b2Fixture;
     ApplyForce(force: b2Vec2, point: b2Vec2): void;
     ApplyImpulse(impulse: b2Vec2, point: b2Vec2): void;
-    ApplyLinearImpulseToCenter(impulse: b2Vec2): void;
+    ApplyLinearImpulseToCenter(impulse: b2Vec2, wake?: boolean): void;
     GetContactList(): any;
   }
 
