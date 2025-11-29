@@ -6,11 +6,12 @@ services:
     container_name: sungboktime-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-sungboktime}
-      MYSQL_USER: ${MYSQL_USER:-sungboktime}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-sungboktime}
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sungboktime
+      MYSQL_USER: sungboktime
+      MYSQL_PASSWORD: sungboktime
     ports:
+      # 외부에서 MySQL 직접 붙을 일 없으면 이 줄은 빼도 됨
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
@@ -32,9 +33,9 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-sungboktime}?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-      MYSQL_ID: ${MYSQL_USER:-sungboktime}
-      MYSQL_PW: ${MYSQL_PASSWORD:-sungboktime}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sungboktime?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: sungboktime
+      SPRING_DATASOURCE_PASSWORD: sungboktime
       RIOT_API_KEY: ${RIOT_API_KEY}
     depends_on:
       mysql:
@@ -48,4 +49,3 @@ volumes:
 networks:
   sungboktime-network:
     driver: bridge
-
