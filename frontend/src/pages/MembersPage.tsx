@@ -142,6 +142,10 @@ function MembersPage() {
                       <th scope="col">이름</th>
                       <th scope="col">소환사명</th>
                       <th scope="col">티어</th>
+                      <th scope="col">경기 수</th>
+                      <th scope="col">승</th>
+                      <th scope="col">패</th>
+                      <th scope="col">승률</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -150,6 +154,12 @@ function MembersPage() {
                         <td>{m.name}</td>
                         <td>{m.riotId}</td>
                         <td>{m.tier ?? "-"}</td>
+                        <td>{m.totalGames}</td>
+                        <td className="members-page__stat--win">{m.wins}</td>
+                        <td className="members-page__stat--loss">{m.losses}</td>
+                        <td className="members-page__stat--rate">
+                          {m.totalGames > 0 ? `${m.winRate.toFixed(1)}%` : "-"}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

@@ -4,6 +4,7 @@ import {
   useMemo,
   useState,
   type FormEvent,
+  type DragEvent,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { createMatch } from "../api/matches";
@@ -69,6 +70,125 @@ export default function MatchCreatePage() {
   const resetRows = useCallback(() => {
     setRows(templateRows.map((row) => ({ ...row })));
   }, [templateRows]);
+
+  // 사용되지 않은 멤버 목록 (이미 배치된 멤버 제외)
+  const availableMembers = useMemo(() => {
+    const usedMemberIds = new Set(
+      rows.filter((row) => row.memberId !== "").map((row) => row.memberId)
+    );
+    return members.filter((member) => !usedMemberIds.has(member.id));
+  }, [members, rows]);
+
+  // 드래그 시작 핸들러
+  const handleDragStart = useCallback(
+    (event: DragEvent<HTMLDivElement>, memberId: number) => {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("memberId", String(memberId));
+      event.dataTransfer.setData("source", "member-list");
+    },
+    []
+  );
+
+  // 슬롯에서 드래그 시작 (다른 슬롯으로 이동하거나 제거하기 위해)
+  const handleSlotDragStart = useCallback(
+    (event: DragEvent<HTMLDivElement>, rowIndex: number) => {
+      const row = rows[rowIndex];
+      if (row.memberId === "") return;
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("memberId", String(row.memberId));
+      event.dataTransfer.setData("source", "slot");
+      event.dataTransfer.setData("rowIndex", String(rowIndex));
+    },
+    [rows]
+  );
+
+  // 드롭 핸들러
+  const handleDrop = useCallback(
+    (event: DragEvent<HTMLDivElement>, targetRowIndex: number) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const memberId = Number(event.dataTransfer.getData("memberId"));
+      const source = event.dataTransfer.getData("source");
+      const sourceRowIndex =
+        source === "slot"
+          ? Number(event.dataTransfer.getData("rowIndex"))
+          : null;
+
+      if (!memberId || isNaN(memberId)) return;
+
+      setRows((prev) => {
+        const next = [...prev];
+        const targetRow = { ...next[targetRowIndex] };
+
+        // 같은 슬롯에 드롭한 경우 무시
+        if (sourceRowIndex === targetRowIndex) return prev;
+
+        // 다른 슬롯에서 드래그한 경우, 원래 슬롯 비우기
+        if (sourceRowIndex !== null) {
+          next[sourceRowIndex] = {
+            ...next[sourceRowIndex],
+            memberId: "",
+            position: "",
+            championName: "",
+          };
+        }
+
+        // 대상 슬롯에 멤버 배치
+        targetRow.memberId = memberId;
+        next[targetRowIndex] = targetRow;
+
+        return next;
+      });
+    },
+    []
+  );
+
+  // 드래그 오버 핸들러 (드롭 허용)
+  const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  // 멤버 목록으로 드롭 (슬롯에서 멤버 제거)
+  const handleMemberListDrop = useCallback(
+    (event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const source = event.dataTransfer.getData("source");
+      if (source !== "slot") return;
+
+      const rowIndex = Number(event.dataTransfer.getData("rowIndex"));
+      if (isNaN(rowIndex)) return;
+
+      setRows((prev) => {
+        const next = [...prev];
+        next[rowIndex] = {
+          ...next[rowIndex],
+          memberId: "",
+          position: "",
+          championName: "",
+        };
+        return next;
+      });
+    },
+    []
+  );
+
+  // 슬롯에서 멤버 제거 (X 버튼)
+  const handleRemoveMember = useCallback((rowIndex: number) => {
+    setRows((prev) => {
+      const next = [...prev];
+      next[rowIndex] = {
+        ...next[rowIndex],
+        memberId: "",
+        position: "",
+        championName: "",
+      };
+      return next;
+    });
+  }, []);
 
   const handleRowChange = useCallback(
     (
@@ -159,6 +279,10 @@ export default function MatchCreatePage() {
 
   const renderTeamSection = (team: "BLUE" | "RED") => {
     let order = 0;
+    const teamRows = rows
+      .map((row, index) => ({ row, index }))
+      .filter(({ row }) => row.teamSide === team);
+
     return (
       <div
         className={`match-create-page__team-card match-create-page__team-card--${team.toLowerCase()}`}
@@ -166,59 +290,62 @@ export default function MatchCreatePage() {
         <div className="match-create-page__team-head">
           <h2>{TEAM_LABEL[team]}</h2>
           <span className="match-create-page__team-count">
-            {rows.filter((row) => row.teamSide === team).length}/5
+            {teamRows.filter(({ row }) => row.memberId !== "").length}/5
           </span>
         </div>
         <div className="match-create-page__team-grid">
-          {rows.map((row, index) => {
-            if (row.teamSide !== team) {
-              return null;
-            }
+          {teamRows.map(({ row, index }) => {
             order += 1;
+            const member = members.find((m) => m.id === row.memberId);
             return (
               <div
-                className="match-create-page__player-card"
+                className={`match-create-page__player-card ${
+                  row.memberId === "" ? "match-create-page__player-card--empty" : ""
+                }`}
                 key={`${team}-${index}`}
+                draggable={row.memberId !== ""}
+                onDragStart={(e) => handleSlotDragStart(e, index)}
+                onDrop={(e) => handleDrop(e, index)}
+                onDragOver={handleDragOver}
               >
                 <div className="match-create-page__player-slot">
                   <span className="match-create-page__player-slot-index">
                     {order}
                   </span>
-                  <select
-                    value={row.memberId === "" ? "" : String(row.memberId)}
-                    onChange={(event) =>
-                      handleRowChange(index, "memberId", event.target.value)
-                    }
-                    disabled={creating || loadingMembers || !!memberError}
-                  >
-                    <option value="">멤버 선택</option>
-                    {members.map((member) => (
-                      <option key={member.id} value={member.id}>
-                        {member.name} ({member.riotId})
-                      </option>
-                    ))}
-                  </select>
+                  {row.memberId === "" ? (
+                    <div className="match-create-page__drop-zone">
+                      멤버를 드롭하세요
+                    </div>
+                  ) : (
+                    <div className="match-create-page__member-display">
+                      <span className="match-create-page__member-name">
+                        {member?.name} ({member?.riotId})
+                      </span>
+                      <button
+                        type="button"
+                        className="match-create-page__remove-button"
+                        onClick={() => handleRemoveMember(index)}
+                        disabled={creating}
+                        title="제거"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <div className="match-create-page__player-inputs">
-                  <input
-                    type="text"
-                    placeholder="포지션"
-                    value={row.position}
-                    onChange={(event) =>
-                      handleRowChange(index, "position", event.target.value)
-                    }
-                    disabled={creating}
-                  />
-                  <input
-                    type="text"
-                    placeholder="챔피언"
-                    value={row.championName}
-                    onChange={(event) =>
-                      handleRowChange(index, "championName", event.target.value)
-                    }
-                    disabled={creating}
-                  />
-                </div>
+                {row.memberId !== "" && (
+                  <div className="match-create-page__player-inputs">
+                    <input
+                      type="text"
+                      placeholder="챔피언"
+                      value={row.championName}
+                      onChange={(event) =>
+                        handleRowChange(index, "championName", event.target.value)
+                      }
+                      disabled={creating}
+                    />
+                  </div>
+                )}
               </div>
             );
           })}
@@ -274,9 +401,49 @@ export default function MatchCreatePage() {
           </label>
         </div>
 
-        <div className="match-create-page__teams">
-          {renderTeamSection("BLUE")}
-          {renderTeamSection("RED")}
+        <div className="match-create-page__main-layout">
+          <aside className="match-create-page__member-list">
+            <div className="match-create-page__member-list-header">
+              <h3>멤버 목록</h3>
+              <span className="match-create-page__member-count">
+                {availableMembers.length}명
+              </span>
+            </div>
+            {loadingMembers ? (
+              <p className="match-create-page__status">멤버 불러오는 중...</p>
+            ) : availableMembers.length === 0 ? (
+              <p className="match-create-page__status">
+                모든 멤버가 배치되었습니다.
+              </p>
+            ) : (
+              <div
+                className="match-create-page__member-list-content"
+                onDrop={handleMemberListDrop}
+                onDragOver={handleDragOver}
+              >
+                {availableMembers.map((member) => (
+                  <div
+                    key={member.id}
+                    className="match-create-page__member-item"
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, member.id)}
+                  >
+                    <span className="match-create-page__member-item-name">
+                      {member.name}
+                    </span>
+                    <span className="match-create-page__member-item-riot">
+                      {member.riotId}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </aside>
+
+          <div className="match-create-page__teams">
+            {renderTeamSection("BLUE")}
+            {renderTeamSection("RED")}
+          </div>
         </div>
 
         <div className="match-create-page__actions">

@@ -6,9 +6,22 @@ public record MemberResponse(
         Long id,
         String name,
         String riotId,
-        String tier
+        String tier,
+        Integer totalGames,
+        Integer wins,
+        Integer losses,
+        Double winRate
 ) {
-    public static MemberResponse from(Member m) {
-        return new MemberResponse(m.getId(), m.getName(), m.getRiotId(), m.getTier());
+    public static MemberResponse from(Member m, int totalGames, int wins, int losses, double winRate) {
+        return new MemberResponse(
+                m.getId(),
+                m.getName(),
+                m.getRiotId(),
+                m.getTier(),
+                totalGames,
+                wins,
+                losses,
+                winRate
+        );
     }
 }

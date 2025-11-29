@@ -11,6 +11,11 @@ spring:
         show_sql: true
         format_sql: true
 
+logging:
+  level:
+    com.sungbok.lol.sungboktime.service.MemberService: DEBUG
+    root: INFO
+
 
 riot:
   api-key: ${RIOT_API_KEY}

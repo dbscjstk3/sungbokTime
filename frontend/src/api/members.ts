@@ -5,6 +5,10 @@ export type Member = {
   name: string;
   riotId: string;
   tier: string | null;
+  totalGames: number;
+  wins: number;
+  losses: number;
+  winRate: number;
 };
 
 export type CreateMemberRequest = {

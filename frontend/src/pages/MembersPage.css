@@ -188,6 +188,21 @@
   background: rgba(56, 189, 248, 0.12);
 }
 
+.members-page__stat--win {
+  color: #059669;
+  font-weight: 600;
+}
+
+.members-page__stat--loss {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.members-page__stat--rate {
+  font-weight: 600;
+  color: #1f2937;
+}
+
 @media (max-width: 1200px) {
   .members-page {
     padding: 2rem 1.5rem 2.5rem;

@@ -31,7 +31,7 @@ public class MatchPlayer {
     @Column(name = "team_side", nullable = false)
     private TeamSide teamSide;
 
-    @Column(name = "win", nullable = false)
+    @Column(name = "win", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isWin;
 
     @Column
