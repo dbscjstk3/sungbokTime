@@ -13,8 +13,11 @@ RUN gradle dependencies --no-daemon || true
 # 소스 코드 복사
 COPY src ./src
 
-# 빌드 실행
-RUN gradle build -x test --no-daemon
+# 빌드 실행 (Spring Boot JAR 생성)
+RUN gradle bootJar -x test --no-daemon
+
+# JAR 파일 생성 확인
+RUN ls -la /app/build/libs/ || (echo "JAR 파일이 생성되지 않았습니다!" && exit 1)
 
 # 최종 런타임 이미지
 FROM eclipse-temurin:17-jre-alpine
