@@ -9,12 +9,16 @@
 *.ipr
 *.iws
 
-# Build outputs
-build/
+# Build outputs (JAR는 제외 - Dockerfile에서 사용)
 dist/
 target/
-*.jar
 *.war
+# build/ 디렉토리는 제외하되, build/libs/*.jar는 포함
+build/classes/
+build/generated/
+build/reports/
+build/tmp/
+build/resources/
 
 # Frontend (프론트엔드는 별도 배포)
 frontend/
