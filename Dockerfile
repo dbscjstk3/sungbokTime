@@ -24,7 +24,8 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# 백엔드 JAR 파일 복사
+# 백엔드 JAR 파일 복사 (Spring Boot bootJar만)
+# plain JAR는 build.gradle에서 비활성화했으므로 bootJar만 존재
 COPY --from=backend-builder /app/build/libs/*.jar app.jar
 
 # 포트 노출
